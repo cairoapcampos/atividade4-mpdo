@@ -1,0 +1,19 @@
+- name: Instalação do IIS no Windows Server EC2
+  hosts: vm-windows-01
+  gather_facts: false
+
+  tasks:
+    - name: Instalar o recurso do IIS
+      win_feature:
+        name: Web-Server
+        state: present
+
+    - name: Abrir a porta 80 no Firewall do Windows
+      win_firewall_rule:
+        name: Allow HTTP
+        direction: in
+        protocol: tcp
+        localport: 80
+        action: allow
+        state: present
+
